@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow:hidden;
+}
+
+/* main card */
+.box{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    width:360px;
+    position:relative;
+    z-index:2;
+}
+
+/* buttons */
+button{
+    padding:12px 32px;
+    margin:10px;
+    font-size:16px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.yes{ background:#ff2f6d; color:white; }
+.no{ background:#ccc; }
+
+/* image */
+img{
+    width:100%;
+    border-radius:15px;
+}
+
+/* popup */
+.popup{
+    position:absolute;
+    background:#ff2f6d;
+    color:white;
+    padding:10px 18px;
+    border-radius:20px;
+    font-size:14px;
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop{
+    from{transform:scale(0);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+/* hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    color:#ff2f6d;
+    font-size:20px;
+    animation: floatUp 6s linear forwards;
+    opacity:0.8;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    0%{ transform:translateY(0) scale(1); opacity:1; }
+    100%{ transform:translateY(-110vh) scale(1.8); opacity:0; }
+}
+
+/* fire bugs */
+.fire{
+    position:fixed;
+    bottom:-10px;
+    width:6px;
+    height:6px;
+    background:radial-gradient(circle,#ffd700,#ff4500);
+    border-radius:50%;
+    box-shadow:0 0 10px #ff4500;
+    animation: fireUp linear forwards;
+    pointer-events:none;
+}
+
+@keyframes fireUp{
+    0%{ transform:translateY(0) scale(1); opacity:1; }
+    100%{ transform:translateY(-120vh) scale(0.2); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="content">
+
+    <h1 style="color:#ba1c4bd3; margin-bottom:5px;">❤️ Shalu ❤️</h1>
+
+    <h2 style="color:#7b3030; margin-top:0;">
+        Will you be my Valentine? 💝
+    </h2>
+
+    <p>
+        Every moment with you feels like a dream come true… ❤️
+    </p>
+
+    <button class="yes" id="yesBtn" onclick="yesClick()">Yes</button>
+    <button class="no" onclick="noClick()">No</button>
+
+</div>
+<script>
+/* HEARTS continuously */
+function createHeart(){
+    var h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="♥";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(14+Math.random()*20)+"px";
+    h.style.animationDuration=(4+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+}
+setInterval(createHeart,500);
+
+/* FIRE BUG */
+function createFire(){
+    var f=document.createElement("div");
+    f.className="fire";
+    f.style.left=Math.random()*100+"vw";
+    f.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),4000);
+}
+
+var yesScale=1;
+
+/* YES CLICK */
+function yesClick(){
+
+    /* 🔥 fire celebration */
+    for(let i=0;i<35;i++){
+        setTimeout(createFire,i*100);
+    }
+
+    document.getElementById("content").innerHTML = `
+        <div style="background:#ffe6ef;padding:20px;border-radius:18px;margin-bottom:15px;">
+            <h1 style="font-size:36px;color:#8b0f2e;">
+                💖 Yay! 🎉<br>Good Choice!
+            </h1>
+        </div>
+
+        <div style="background:#fff;padding:12px;border-radius:18px;margin-bottom:15px;">
+            <img src="vphoto1.jpeg">
+        </div>
+
+        <div style="background:#fff7fb;padding:18px;border-radius:18px;">
+            <b>I knew you'd say YES! 💕</b><br><br>
+            You’ve made me the happiest person 🥰<br>
+            Can’t wait to celebrate this day with you 🌹<br><br>
+            ❤️ ❤️ ❤️
+        </div>
+    `;
+}
+
+/* NO CLICK */
+function noClick(){
+    var replies=[
+        "wait… are you sure? 🥺",
+        "😅 try again!",
+        "Really…?!",
+        "haha nice try 😜",
+        "no escape 😏",
+        "you can’t escape love ❤",
+        "🤨 Pakka?",
+        "😌 I’ll wait for YES"
+    ];
+
+    var msg=replies[Math.floor(Math.random()*replies.length)];
+
+    var pop=document.createElement("div");
+    pop.className="popup";
+    pop.innerHTML=msg;
+    pop.style.top=Math.random()*220+"px";
+    pop.style.left=Math.random()*220+"px";
+    document.getElementById("content").appendChild(pop);
+    setTimeout(()=>pop.remove(),1500);
+
+    var yesBtn=document.getElementById("yesBtn");
+    yesScale+=0.15;
+    yesBtn.style.transform="scale("+yesScale+")";
+    yesBtn.style.background="#2ecc71";
+}
+</script>
+
+</body>
+</html>
